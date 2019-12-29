@@ -58,6 +58,7 @@ public class GPACalcClient{
     public static void printGPAKey(){
         System.out.println();
         System.out.println("GRADE POINT AVERAGE (GPA) KEY");
+	System.out.println("A+ = 4.00");
         System.out.println("A = 4.00");
         System.out.println("A- = 3.70");
         System.out.println("B+ = 3.33");
@@ -157,7 +158,7 @@ public class GPACalcClient{
 	   // calculate final gpa 
 	   if(courseList.getCount() > 0){
           	 double finalGPA = courseList.calcGPA();
-           	 System.out.printf("Final GPA is %4.2f%n",finalGPA);
+           	 System.out.printf("Final GPA is %4.3f%n",finalGPA);
            }
 	   else {
 		System.out.println("Unable to compute GPA: please check that your schedule contains courses");
