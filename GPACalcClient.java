@@ -152,7 +152,10 @@ public class GPACalcClient{
     }
 
     public static void processUserInput(char choice, CourseList courseList, Scanner input) {
-        String courseToEdit; 
+        
+	// course name 
+	String courseToEdit; 
+	
         // execute appropriate menu action
         if (choice == 'C') {
 	   // calculate final gpa 
@@ -167,14 +170,21 @@ public class GPACalcClient{
 	    // update course
             System.out.println("Please enter the course ID: ");
             courseToEdit = promptString(input);
-            double newCourseGPA = promptGPA(input); 
-            double newCourseHours = promptHours(input);
-            if (courseList.searchCourseList(courseToEdit)!=1){
+	    if (courseList.searchCourseList(courseToEdit) < 0){
+		
+		// reprompt for value course
+		while(courseList.searchCourseList(courseToEdit)<0){
+			System.out.println("Error: course not found");
+			System.out.println("Please enter the course ID: ");
+			courseToEdit = promptString(input);
+		}
+            } 	
+		// prompt for updated grade and hour values
+		double newCourseGPA = promptGPA(input); 
+		double newCourseHours = promptHours(input);
+		
+		// update course info 
                 courseList.updateCourse(courseToEdit, newCourseGPA, newCourseHours);
-            }
-            else {
-                System.out.println("Please enter a valid course");
-            }
         } else if (choice == 'S') {
             // save config to file
 	    String fileName = promptFileName(input);
@@ -266,63 +276,67 @@ public class GPACalcClient{
         return promptDouble(input);
     }
     
-	public static int promptInt(Scanner input) {
+    public static int promptInt(Scanner input) {
 
-        String userInput; // user's input
+	String userInput; // user's input
 
-        // read user input
-        userInput = input.nextLine().trim();
+	// read user input
+	userInput = input.nextLine().trim();
 
-        // display error and re-prompt if input is empty or not integer
-        while (userInput.isEmpty() || !checkIfInt(userInput)) {
-            userInput = input.nextLine();
-        }
-
-        return Integer.parseInt(userInput);
+	// display error and re-prompt if input is empty or not integer
+	while (userInput.isEmpty() || !checkIfInt(userInput)) {
+		System.out.println("Please enter an integer");
+		userInput = input.nextLine();
 	}
-	public static boolean checkIfInt(String num) {
 
-		// try to parse string as int
-		try {
-        int i = Integer.parseInt(num);
-		}
-
-		// string is not an integer if there is an exception, exit and return false
-		catch (NumberFormatException nfe) {
-        return false;
-		}
-
-		// otherwise string is integer
-    return true;
-	}
-	public static double promptDouble(Scanner input) {
-
-        String userInput; // user's input
-
-        // read user input
-        userInput = input.nextLine().trim();
-
-        // display error and re-prompt if input is empty or not integer
-        while (userInput.isEmpty() || !checkIfDouble(userInput)) {
-            userInput = input.nextLine();
-        }
-
-        return Double.parseDouble(userInput);
+	return Integer.parseInt(userInput);
     }
-	public static boolean checkIfDouble(String num) {
+    
+    public static boolean checkIfInt(String num) {
 
-        // try to parse string as int
-        try {
-            double i = Double.parseDouble(num);
-        }
+	// try to parse string as int
+	try {
+		int i = Integer.parseInt(num);
+	}
 
-        // string is not an integer if there is an exception, exit and return false
-        catch (NumberFormatException nfe) {
-            return false;
-        }
+	// string is not an integer if there is an exception, exit and return false
+	catch (NumberFormatException nfe) {
+		return false;
+	}
 
-        // otherwise string is integer
-        return true;
+	// otherwise string is integer
+	return true;
+    }
+    
+    public static double promptDouble(Scanner input) {
+
+	String userInput; // user's input
+
+	// read user input
+	userInput = input.nextLine().trim();
+
+	// display error and re-prompt if input is empty or not integer
+	while (userInput.isEmpty() || !checkIfDouble(userInput)) {
+		System.out.println("Please enter a number"); 
+		userInput = input.nextLine();
+	}
+
+	return Double.parseDouble(userInput);
+    }
+    public static boolean checkIfDouble(String num) {
+
+	// try to parse string as int
+	try {
+		double i = Double.parseDouble(num);
+	}
+
+	// string is not an integer if there is an exception, exit and return false
+	catch (NumberFormatException nfe) {
+		return false;
+	}
+
+	// otherwise string is integer
+	return true;
     }
     public static String promptString(Scanner input){
         String userInput;
