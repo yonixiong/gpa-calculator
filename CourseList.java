@@ -134,7 +134,7 @@ public class CourseList extends Course {
         int found = -1;                                             
   
         for (int i = 0; i < count; i++) {                              
-            if (courseList[i].getCourseName().contains(name)) {     
+            if (courseList[i].getCourseName().matches(name)) {     
 			
                 found =i;                                            
             }
