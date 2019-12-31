@@ -60,16 +60,16 @@ public class GPACalcClient{
         System.out.println("GRADE POINT AVERAGE (GPA) KEY");
 	System.out.println("A+ = 4.00");
         System.out.println("A = 4.00");
-        System.out.println("A- = 3.70");
+        System.out.println("A- = 3.67");
         System.out.println("B+ = 3.33");
         System.out.println("B = 3.00");
-        System.out.println("B- = 2.70");
+        System.out.println("B- = 2.67");
         System.out.println("C+ = 2.30");
         System.out.println("C = 2.00");
-        System.out.println("C- = 1.70");
+        System.out.println("C- = 1.67");
         System.out.println("D+ = 1.30");
         System.out.println("D = 1.00");
-        System.out.println("D- = 0.70");
+        System.out.println("D- = 0.67");
         System.out.println();
     }
 	public static void printMenu() {
@@ -108,9 +108,9 @@ public class GPACalcClient{
     }
     public static CourseList parseConfig(String fileName){
 	try{
-		File file = new File (fileName + ".txt"); 
+		File file = new File("Save_Files/"+fileName + ".txt");
 		Scanner fileScan = new Scanner(file); 
-		fileScan.useDelimiter(";");
+		fileScan.useDelimiter("\\n");
 		String userName = fileScan.next();
 		double prevGPA = fileScan.nextDouble();
 		double prevHours = fileScan.nextDouble();
@@ -210,16 +210,23 @@ public class GPACalcClient{
      }
     public static void saveConfig(CourseList courseList, String fileName){
 	try {
-            FileOutputStream fostream = new FileOutputStream(fileName + ".txt");            
-            BufferedOutputStream bostream = new BufferedOutputStream(fostream);
+	    File saveDir = new File("Save_Files");
+	    if (!saveDir.exists()){
+		try {saveDir.mkdir();
+		}
+		catch(SecurityException e){
+		}
+	    }
+	    String file = "Save_Files/" + fileName + ".txt";
+            FileOutputStream fostream = new FileOutputStream(file); 
+	    BufferedOutputStream bostream = new BufferedOutputStream(fostream);
             PrintStream outP = new PrintStream(bostream);
-           
-		 // use outP to file
-	    outP.printf("%s;%f;%f;%d", courseList.getUserName(), courseList.getStartingGPA(), 
+	    // use outP to file
+	    outP.printf("%s\n%f\n%f\n%d", courseList.getUserName(), courseList.getStartingGPA(), 
 			courseList.getPrevHours(),courseList.getCount());
 	    int count = courseList.getCount();
 	    for (int i = 0; i < count; i++ ){
-	    	outP.printf(";%s;%f;%f", courseList.getName(i), courseList.getGPA(i),
+	    	outP.printf("\n%s\n%f\n%f", courseList.getName(i), courseList.getGPA(i),
 				courseList.getHours(i));
             }
 	    outP.close();

@@ -3,14 +3,14 @@ import java.io.*;
 public class CourseList extends Course {
 
     private static final int MAXSIZE = 100;             // Maximum size of course list
-    Course[] courseList = new Course[MAXSIZE];      			// Array containing MAXSIZE course objs
+    Course[] courseList = new Course[MAXSIZE];      	// Array containing MAXSIZE course objs
     private int count;                                  // Num courses in list
     private String userName;                            // name of list owner
 	double startingGPA; 
 	double prevHours; 
 
     public CourseList() {
-        userName = "My Courses";                   // Default list name
+        userName = "My Courses";                   	// Default list name
         count = 0;                                      // Num courses at init
 		startingGPA = -1;
 		prevHours = 0; 
@@ -99,7 +99,7 @@ public class CourseList extends Course {
             System.out.println();
 
 	    if(startingGPA > 0){
-		pOut.println("Previous Stats (entered by user)");
+		pOut.println("Intital Stats (entered by user)");
 	    	pOut.println("GPA: " + this.startingGPA);
 	    	pOut.println("Hours: " + this.prevHours); 
 		pOut.println();
